@@ -3,6 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Auth, Hub } from 'aws-amplify';
+import { SumerianScene } from 'aws-amplify-react';
+
+import Amplify from 'aws-amplify';
+import Aws_exports from './aws-exports';
+import '@aws-amplify/ui/dist/style.css';
+
+Amplify.configure(Aws_exports);
 
 const initialFormState = {
   username: '', password: '', email: '', authCode: '', formType: 'signUp'
@@ -58,6 +65,7 @@ async function checkUser(){
     await Auth.signIn(username, password)
     updateFormState(() => ({ ...formState, formType: "signedIn" }))
   }
+  
 
   return (
     <div className="App">
@@ -97,10 +105,14 @@ async function checkUser(){
       {
         formType === 'signedIn' && (
           <div>
-            <h1>Hello world, welcome user.</h1>
+            <div style={ { height: '50vh' } }>
+              <SumerianScene sceneName='amplifyscene'/>
+            </div>
+            
             <button onClick={
               () => Auth.signOut()
             }>Sign Out</button>
+
           </div>
         )
       }
